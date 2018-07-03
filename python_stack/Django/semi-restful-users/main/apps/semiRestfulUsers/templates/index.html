@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vals Index</title>
+</head>
+<body>
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for val in user %}
+            <tr>
+                <td>{{val.id}}</td>
+                <td><a href="{% url 'show' id=val.id %}"> 
+                {{val.first_name}} {{val.last_name}}</a></td>
+                <td>{{val.email}}</td>
+                <td>{{val.created_at}}</td>
+                <td><form action="{% url 'show' id=val.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="val_id" value={{val.id}}>
+                    <input type="submit" value="Show">
+                </form></td>
+                <td><form action="{% url 'editPage' id=val.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="val_id" value={{val.id}}>
+                    <input type="submit" value="Edit">
+                </form></td>
+                <td><form action="{% url 'delete' id=val.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="val_id" value={{val.id}}>
+                    <input type="submit" value="Delete">
+                </form></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{% url 'new' %}">Add a new user</a>
+    
+</body>
+</html>
